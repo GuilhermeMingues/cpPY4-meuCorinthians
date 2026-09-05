@@ -1,0 +1,403 @@
+:root {
+  /* neutros */
+  --preto: #0c0c0c; /* fundo do header, footer, cards escuros */
+  --preto-2: #171717; /* variação de preto, texturas */
+  --branco: #ffffff; /* fundo principal das sections */
+  --off: #f6f4f1; /* fundo alternado (História, Ídolos) */
+  --off-2: #eeece7; /* variação do off-white */
+  --cinza: #8a8883; /* texto terciário / datas */
+  --cinza-escuro: #3d3c39; /* parágrafos, texto secundário */
+  --linha: #e3e0da; /* bordas e divisores sutis */
+
+  /* cor de marca */
+  --vinho: #090000; /* cor de destaque principal (botões, eyebrows, links) */
+  --vinho-vivo: #1e0a0a; /* hover / variação mais viva do vinho */
+  --vinho-claro: #f4e3e2; /* fundo suave para badges/tags claras, se precisar */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Work Sans', sans-serif;
+  background-color: var(--branco);
+  color: var(--cinza-escuro);
+  line-height: 1.6;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1rem 1.5rem;
+  background-color: var(--preto);
+}
+
+.logo-texto h1 { margin: 0; font-size: 1.25rem; color: var(--branco); }
+.logo-texto h3 {
+  margin: 0;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cinza);
+  font-weight: 500;
+}
+
+.cabecalho nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navegacao__link {
+  position: relative;
+  padding: 0.6rem 0.9rem;
+  color: var(--branco);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 5px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.navegacao__link:hover {
+  background-color: var(--branco);
+  color: var(--preto);
+}
+
+.hero {
+  background: linear-gradient(180deg, var(--preto) 0%, var(--preto-2) 100%);
+  color: var(--branco);
+  padding: 4rem 1.5rem;
+  text-align: center;
+}
+
+.hero__eyebrow { text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.8rem; color: var(--cinza); }
+.hero__titulo { font-family: 'Anton', sans-serif; font-size: clamp(2.2rem, 6vw, 4rem); color: var(--branco); }
+.hero__subtitulo { color: #d8d6d2; max-width: 40ch; margin: 0 auto 2rem; }
+.hero__acoes { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+.botao { font-weight: 600; padding: 0.85rem 1.5rem; border-radius: 6px; border: 2px solid transparent; cursor: pointer; }
+.botao--claro { background-color: var(--branco); color: var(--preto); }
+.botao--contorno { background: transparent; border-color: var(--branco); color: var(--branco); }
+
+#historia, #titulos, #jogadores {
+  padding: 4rem 1.5rem;
+}
+
+#historia > *, #titulos > *, #jogadores > * {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+#inicio > h3, #inicio > p {
+  max-width: 720px;
+  margin: 1.5rem auto 0;
+  padding-inline: 1.5rem;
+}
+
+#historia { background-color: var(--off); }
+#titulos { background-color: var(--branco); }
+#jogadores { background-color: var(--off); }
+
+#historia h2, #titulos h2, #jogadores h2, #inicio h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+#historia h3, #titulos h3, #jogadores h3 {
+  color: var(--vinho);
+  margin-top: 2.5rem;
+  font-size: 1.3rem;
+}
+
+footer {
+  background-color: var(--preto);
+  color: var(--cinza);
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+footer p { color: var(--cinza); margin: 0.25rem 0; }
+
+@media (max-width: 640px) {
+  .cabecalho { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .hero { padding: 3rem 1rem; }
+}
+
+/* =========================================
+   JOGADORES
+========================================= */
+
+.secao-cabecalho {
+  max-width: 900px !important;
+  text-align: center;
+  margin: 0 auto 3rem !important;
+}
+
+.secao-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--vinho);
+  margin-bottom: 0.5rem;
+}
+
+.secao-cabecalho h2 {
+  margin: 0 0 1rem;
+}
+
+.secao-cabecalho p {
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--cinza);
+}
+
+
+/* =========================================
+   CARDS DOS ÍDOLOS
+========================================= */
+
+.cards-jogadores {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.card-jogador {
+  position: relative;
+  background-color: var(--branco);
+  border: 1px solid var(--linha);
+  border-radius: 10px;
+  padding: 1.5rem;
+  min-height: 230px;
+  overflow: hidden;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.card-jogador:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  border-color: var(--vinho);
+}
+
+.card-jogador__numero {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--off-2);
+  margin-bottom: 1rem;
+}
+
+.card-jogador__conteudo h3 {
+  margin: 0;
+  color: var(--preto);
+  font-size: 1.4rem;
+}
+
+.card-jogador__conteudo span {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--vinho);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.card-jogador__conteudo p {
+  margin-top: 1rem;
+  color: var(--cinza-escuro);
+  font-size: 0.9rem;
+}
+
+
+/* =========================================
+   ELENCO ATUAL
+========================================= */
+
+.elenco-cabecalho {
+  margin-top: 5rem !important;
+}
+
+.cards-elenco {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+}
+
+.card-elenco {
+  background-color: var(--branco);
+  border: 1px solid var(--linha);
+  border-radius: 10px;
+  padding: 1.25rem;
+  min-height: 190px;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.card-elenco:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.card-elenco__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-elenco__numero {
+  font-family: 'Anton', sans-serif;
+  font-size: 2rem;
+  color: var(--vinho);
+}
+
+.favorito {
+  border: 0;
+  background: transparent;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: var(--cinza);
+  transition: 0.2s ease;
+}
+
+.favorito:hover {
+  color: var(--vinho);
+  transform: scale(1.1);
+}
+
+.card-elenco__info {
+  margin-top: 3rem;
+}
+
+.card-elenco__info h3 {
+  margin: 0 !important;
+  font-size: 1rem !important;
+  color: var(--preto) !important;
+}
+
+.card-elenco__info span {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--cinza);
+  font-size: 0.8rem;
+}
+
+
+/* =========================================
+   DESTAQUE
+========================================= */
+
+.destaque-jogador {
+  max-width: 1100px;
+  margin: 4rem auto 0;
+  padding: 2rem;
+  background-color: var(--preto);
+  color: var(--branco);
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.destaque-jogador h3 {
+  color: var(--branco) !important;
+  margin: 0.25rem 0 0.75rem !important;
+  font-size: 1.8rem !important;
+}
+
+.destaque-jogador p {
+  max-width: 650px;
+  margin: 0;
+  color: #d8d6d2;
+}
+
+.destaque-jogador .secao-tag {
+  color: var(--cinza);
+}
+
+.destaque-jogador__simbolo {
+  font-family: 'Anton', sans-serif;
+  font-size: 4rem;
+  color: var(--vinho-claro);
+}
+
+
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+
+@media (max-width: 900px) {
+
+  .cards-jogadores {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cards-elenco {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+}
+
+
+@media (max-width: 640px) {
+
+  .cards-jogadores {
+    grid-template-columns: 1fr;
+  }
+
+  .cards-elenco {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .destaque-jogador {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .destaque-jogador__simbolo {
+    font-size: 3rem;
+  }
+
+}
+
+.favorito--ativo {
+  color: var(--vinho);
+}
+
+@media (max-width: 420px) {
+
+  .cards-elenco {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+.elenco-grupo-titulo {
+  max-width: 1100px;
+  margin: 2.5rem auto 1rem;
+  padding-inline: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vinho);
+}
+
+.elenco-grupo-titulo:first-child {
+  margin-top: 0;
+}
