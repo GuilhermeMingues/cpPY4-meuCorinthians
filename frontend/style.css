@@ -13,16 +13,32 @@
   --vinho: #090000; /* cor de destaque principal (botões, eyebrows, links) */
   --vinho-vivo: #1e0a0a; /* hover / variação mais viva do vinho */
   --vinho-claro: #f4e3e2; /* fundo suave para badges/tags claras, se precisar */
+
+  /* espaçamento (escala consistente usada em todo o site) */
+  --espaco-xs: 0.5rem;
+  --espaco-sm: 1rem;
+  --espaco-md: 1.75rem;
+  --espaco-lg: 3rem;
+  --espaco-xl: 5rem;
+
+  /* larguras de conteúdo */
+  --largura-texto: 740px;
+  --largura-secao: 1520px;
 }
 
 * { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 128%;
+}
 
 body {
   margin: 0;
   font-family: 'Work Sans', sans-serif;
   background-color: var(--branco);
   color: var(--cinza-escuro);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .cabecalho {
@@ -30,16 +46,27 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: 1rem 1.5rem;
+  padding: 1.5rem 3rem;
   background-color: var(--preto);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.logo-texto h1 { margin: 0; font-size: 1.25rem; color: var(--branco); }
-.logo-texto h3 {
+.logo-texto h1 {
   margin: 0;
-  font-size: 0.7rem;
+  font-family: 'Anton', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.02em;
+  color: var(--branco);
+}
+.logo-texto h3 {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   color: var(--cinza);
   font-weight: 500;
 }
@@ -52,79 +79,287 @@ body {
 
 .navegacao__link {
   position: relative;
-  padding: 0.6rem 0.9rem;
+  padding: 0.75rem 1.15rem;
   color: var(--branco);
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 1.05rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   border-radius: 5px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.navegacao__link::after {
+  content: "";
+  position: absolute;
+  left: 1.15rem;
+  right: 1.15rem;
+  bottom: 0.4rem;
+  height: 2px;
+  background-color: var(--branco);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
 }
 
 .navegacao__link:hover {
-  background-color: var(--branco);
-  color: var(--preto);
+  color: var(--branco);
+  transform: translateY(-1px);
+}
+
+.navegacao__link:hover::after {
+  transform: scaleX(1);
 }
 
 .hero {
-  background: linear-gradient(180deg, var(--preto) 0%, var(--preto-2) 100%);
+  position: relative;
+  min-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image:
+    linear-gradient(180deg, rgba(12, 12, 12, 0.5) 0%, rgba(12, 12, 12, 0.35) 45%, rgba(9, 0, 0, 0.92) 100%),
+    url(img/neo.jpg);
+  background-size: cover;
+  background-position: center 30%;
   color: var(--branco);
   padding: 4rem 1.5rem;
   text-align: center;
 }
 
-.hero__eyebrow { text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.8rem; color: var(--cinza); }
-.hero__titulo { font-family: 'Anton', sans-serif; font-size: clamp(2.2rem, 6vw, 4rem); color: var(--branco); }
-.hero__subtitulo { color: #d8d6d2; max-width: 40ch; margin: 0 auto 2rem; }
+.hero__eyebrow { text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.95rem; color: #d8d6d2; }
+.hero__titulo { font-family: 'Anton', sans-serif; font-size: clamp(3rem, 8vw, 5.5rem); color: var(--branco); letter-spacing: 0.01em; margin: 0.6rem 0 1.25rem; line-height: 1.05; }
+.hero__subtitulo { color: #d8d6d2; max-width: 36ch; margin: 0 auto 2.5rem; font-size: 1.3rem; }
 .hero__acoes { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-.botao { font-weight: 600; padding: 0.85rem 1.5rem; border-radius: 6px; border: 2px solid transparent; cursor: pointer; }
+.botao {
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
 .botao--claro { background-color: var(--branco); color: var(--preto); }
-.botao--contorno { background: transparent; border-color: var(--branco); color: var(--branco); }
+.botao--claro:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25); }
+.botao--contorno { background: transparent; border-color: rgba(255, 255, 255, 0.6); color: var(--branco); }
+.botao--contorno:hover { border-color: var(--branco); transform: translateY(-2px); }
 
-#historia, #titulos, #jogadores {
-  padding: 4rem 1.5rem;
+#historia,
+#titulos,
+#jogadores {
+  padding: var(--espaco-xl) 3rem;
+  position: relative;
 }
 
-#historia > *, #titulos > *, #jogadores > * {
-  max-width: 720px;
+#inicio {
+  padding: 0;
+  position: relative;
+}
+
+#jogadores > * {
+  max-width: var(--largura-texto);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#jogadores > .cards-jogadores,
+#jogadores > #elenco-lista,
+#jogadores > .destaque-jogador,
+#jogadores > .foto-secao--larga {
+  max-width: var(--largura-secao);
+}
+
+.secao-legenda {
+  color: var(--cinza);
+  text-align: center;
+  font-size: 1.3rem;
+  margin: 0 auto var(--espaco-lg) !important;
+  max-width: 60ch;
+}
+
+.secao-tag--central {
+  display: block !important;
+  text-align: center !important;
+}
+
+/* Texto corrido: largo, mas com um limite para não virar uma
+   única linha gigante em telas muito largas */
+.secao-corpo {
+  width: 100%;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
-#inicio > h3, #inicio > p {
-  max-width: 720px;
-  margin: 1.5rem auto 0;
-  padding-inline: 1.5rem;
+#inicio .secao-corpo {
+  padding: var(--espaco-xl) 1.5rem 0;
+}
+
+.secao-corpo > p {
+  max-width: none;
+  margin: 0 0 1.5rem;
+  font-size: 1.15rem;
+}
+
+.secao-corpo > p:first-of-type::first-letter {
+  font-family: 'Anton', sans-serif;
+  font-size: 3.4rem;
+  line-height: 0.75;
+  float: left;
+  padding: 0.15rem 0.6rem 0 0;
+  color: var(--vinho);
+}
+
+.secao-corpo > h3 {
+  max-width: none;
+  margin: var(--espaco-lg) 0 var(--espaco-md);
+  padding-top: 0.85rem;
+  font-size: 1.75rem;
+  border-top: 3px solid var(--vinho);
+  display: inline-block;
+}
+
+.secao-corpo .foto-secao {
+  max-width: 880px;
+  margin: 0 auto var(--espaco-lg);
 }
 
 #historia { background-color: var(--off); }
-#titulos { background-color: var(--branco); }
+#titulos { background-color: var(--branco); border-top: 1px solid var(--linha); border-bottom: 1px solid var(--linha); }
 #jogadores { background-color: var(--off); }
 
-#historia h2, #titulos h2, #jogadores h2, #inicio h3 {
+#historia h2, #titulos h2, #jogadores h2 {
   text-align: center;
-  margin-bottom: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto var(--espaco-sm);
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2.8rem, 6.5vw, 5rem);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--preto);
+  line-height: 1.1;
+}
+
+#inicio .secao-corpo > h3:first-of-type {
+  text-align: center;
+  border-top: none;
+  padding-top: 0;
+  display: block;
+  font-family: 'Anton', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-size: clamp(2rem, 3.6vw, 2.75rem);
+  color: var(--preto);
+  margin-bottom: var(--espaco-md);
 }
 
 #historia h3, #titulos h3, #jogadores h3 {
   color: var(--vinho);
-  margin-top: 2.5rem;
-  font-size: 1.3rem;
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 footer {
   background-color: var(--preto);
   color: var(--cinza);
-  text-align: center;
-  padding: 2rem 1.5rem;
+  padding: 3.5rem 3rem 2rem;
 }
-footer p { color: var(--cinza); margin: 0.25rem 0; }
+
+.rodape__topo {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.rodape__marca h2 {
+  font-family: 'Anton', sans-serif;
+  color: var(--branco);
+  font-size: 2rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.rodape__marca p {
+  margin: 0.35rem 0 0;
+  color: var(--cinza);
+  font-size: 1.05rem;
+}
+
+.rodape__links {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.rodape__links a {
+  color: var(--branco);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: color 0.2s ease;
+}
+
+.rodape__links a:hover {
+  color: var(--vinho-claro);
+}
+
+.rodape__linha {
+  max-width: 1200px;
+  margin: 2.5rem auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rodape__base {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+footer p { color: var(--cinza); margin: 0.25rem 0; font-size: 0.95rem; }
+
+@media (max-width: 900px) {
+  #historia,
+  #titulos,
+  #jogadores {
+    padding: var(--espaco-lg) 1.75rem;
+  }
+
+  #inicio {
+    padding: 0;
+  }
+
+  #inicio .secao-corpo {
+    padding: var(--espaco-lg) 1.25rem 0;
+  }
+}
 
 @media (max-width: 640px) {
   .cabecalho { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-  .hero { padding: 3rem 1rem; }
+  .hero { padding: 3.5rem 1.25rem; min-height: 74vh; }
+
+  body {
+    font-size: 19px;
+  }
+
+  #historia,
+  #titulos,
+  #jogadores {
+    padding: var(--espaco-lg) 1.25rem;
+  }
+
+  #inicio {
+    padding: 0;
+  }
 }
 
 /* =========================================
@@ -134,26 +369,33 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
 .secao-cabecalho {
   max-width: 900px !important;
   text-align: center;
-  margin: 0 auto 3rem !important;
+  margin: 0 auto var(--espaco-lg) !important;
 }
 
 .secao-tag {
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   color: var(--vinho);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--espaco-xs);
 }
 
 .secao-cabecalho h2 {
-  margin: 0 0 1rem;
+  margin: 0 0 1.1rem;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2.4rem, 5.5vw, 3.9rem);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--preto);
+  line-height: 1.1;
 }
 
 .secao-cabecalho p {
   max-width: 600px;
   margin: 0 auto;
   color: var(--cinza);
+  font-size: 1.15rem;
 }
 
 
@@ -162,20 +404,18 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
 ========================================= */
 
 .cards-jogadores {
-  max-width: 1100px;
+  max-width: var(--largura-secao);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
 }
 
 .card-jogador {
   position: relative;
   background-color: var(--branco);
   border: 1px solid var(--linha);
-  border-radius: 10px;
-  padding: 1.5rem;
-  min-height: 230px;
+  border-radius: 14px;
   overflow: hidden;
   transition:
     transform 0.25s ease,
@@ -183,10 +423,38 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
     border-color 0.25s ease;
 }
 
+.card-jogador::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--vinho), var(--vinho-vivo));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
 .card-jogador:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  transform: translateY(-6px);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.1);
   border-color: var(--vinho);
+}
+
+.card-jogador:hover::before {
+  transform: scaleX(1);
+}
+
+.card-jogador__foto {
+  display: block;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  object-position: top center;
+  background-color: var(--off-2);
+}
+
+.card-jogador__conteudo {
+  padding: 1.9rem;
 }
 
 .card-jogador__numero {
@@ -200,23 +468,25 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
 .card-jogador__conteudo h3 {
   margin: 0;
   color: var(--preto);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
+  line-height: 1.15;
 }
 
 .card-jogador__conteudo span {
   display: block;
-  margin-top: 0.25rem;
+  margin-top: 0.4rem;
   color: var(--vinho);
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .card-jogador__conteudo p {
-  margin-top: 1rem;
+  margin-top: 1.1rem;
   color: var(--cinza-escuro);
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
 
@@ -225,31 +495,36 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
 ========================================= */
 
 .elenco-cabecalho {
-  margin-top: 5rem !important;
+  margin-top: var(--espaco-xl) !important;
 }
 
 .cards-elenco {
-  max-width: 1100px;
+  max-width: var(--largura-secao);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
 }
 
 .card-elenco {
   background-color: var(--branco);
   border: 1px solid var(--linha);
-  border-radius: 10px;
-  padding: 1.25rem;
-  min-height: 190px;
+  border-radius: 14px;
+  padding: 2.25rem;
+  height: 270px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   transition:
     transform 0.25s ease,
-    box-shadow 0.25s ease;
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
 
 .card-elenco:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09);
+  border-color: var(--vinho);
 }
 
 .card-elenco__topo {
@@ -260,14 +535,14 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
 
 .card-elenco__numero {
   font-family: 'Anton', sans-serif;
-  font-size: 2rem;
+  font-size: 3.2rem;
   color: var(--vinho);
 }
 
 .favorito {
   border: 0;
   background: transparent;
-  font-size: 1.6rem;
+  font-size: 2.1rem;
   cursor: pointer;
   color: var(--cinza);
   transition: 0.2s ease;
@@ -278,21 +553,30 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
   transform: scale(1.1);
 }
 
+.favorito--ativo {
+  color: var(--vinho);
+}
+
 .card-elenco__info {
-  margin-top: 3rem;
+  margin-top: 0;
 }
 
 .card-elenco__info h3 {
   margin: 0 !important;
-  font-size: 1rem !important;
+  font-size: 1.5rem !important;
+  line-height: 1.25 !important;
   color: var(--preto) !important;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .card-elenco__info span {
   display: block;
-  margin-top: 0.35rem;
+  margin-top: 0.5rem;
   color: var(--cinza);
-  font-size: 0.8rem;
+  font-size: 1.05rem;
 }
 
 
@@ -301,12 +585,13 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
 ========================================= */
 
 .destaque-jogador {
-  max-width: 1100px;
-  margin: 4rem auto 0;
-  padding: 2rem;
-  background-color: var(--preto);
+  max-width: var(--largura-secao);
+  margin: var(--espaco-xl) auto 0;
+  padding: 3rem;
+  background: linear-gradient(135deg, var(--preto) 0%, var(--preto-2) 100%);
   color: var(--branco);
-  border-radius: 10px;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
 
   display: flex;
   align-items: center;
@@ -316,14 +601,18 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
 
 .destaque-jogador h3 {
   color: var(--branco) !important;
-  margin: 0.25rem 0 0.75rem !important;
-  font-size: 1.8rem !important;
+  font-family: 'Anton', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0.4rem 0 0.85rem !important;
+  font-size: 2.3rem !important;
 }
 
 .destaque-jogador p {
   max-width: 650px;
   margin: 0;
   color: #d8d6d2;
+  font-size: 1.1rem;
 }
 
 .destaque-jogador .secao-tag {
@@ -332,8 +621,9 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
 
 .destaque-jogador__simbolo {
   font-family: 'Anton', sans-serif;
-  font-size: 4rem;
+  font-size: 5rem;
   color: var(--vinho-claro);
+  flex-shrink: 0;
 }
 
 
@@ -348,7 +638,7 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
   }
 
   .cards-elenco {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
 }
@@ -361,7 +651,7 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
   }
 
   .cards-elenco {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .destaque-jogador {
@@ -370,13 +660,9 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
   }
 
   .destaque-jogador__simbolo {
-    font-size: 3rem;
+    font-size: 3.4rem;
   }
 
-}
-
-.favorito--ativo {
-  color: var(--vinho);
 }
 
 @media (max-width: 420px) {
@@ -388,16 +674,86 @@ footer p { color: var(--cinza); margin: 0.25rem 0; }
 }
 
 .elenco-grupo-titulo {
-  max-width: 1100px;
-  margin: 2.5rem auto 1rem;
+  max-width: var(--largura-secao);
+  margin: var(--espaco-lg) auto 1.5rem;
   padding-inline: 0.25rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--vinho);
 }
 
+.elenco-grupo-titulo::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: var(--linha);
+}
+
 .elenco-grupo-titulo:first-child {
   margin-top: 0;
+}
+
+/* =========================================
+   FOTOS DE SEÇÃO
+========================================= */
+
+.foto-secao {
+  margin: 2.5rem auto var(--espaco-lg);
+  max-width: var(--largura-texto);
+  text-align: center;
+}
+
+.foto-secao img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  object-fit: cover;
+  object-position: center 35%;
+  border-radius: 12px;
+  display: block;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.foto-secao figcaption {
+  margin-top: 0.9rem;
+  font-size: 1rem;
+  color: var(--cinza);
+  font-style: italic;
+}
+
+.foto-secao--larga {
+  max-width: var(--largura-secao);
+}
+
+.foto-secao--larga img {
+  aspect-ratio: 21 / 9;
+}
+
+/* Ajuste fino por foto: mantém o assunto principal visível sem cortar
+   a parte de cima (rosto/ação) nem exagerar no zoom */
+.foto-secao--historia img {
+  object-position: center 20%;
+}
+
+.foto-secao--titulos img {
+  object-position: center;
+}
+
+.foto-secao--torcida img {
+  object-position: center 45%;
+}
+
+@media (max-width: 640px) {
+  .foto-secao img {
+    aspect-ratio: 4 / 3;
+  }
+
+  .foto-secao--larga img {
+    aspect-ratio: 16 / 10;
+  }
 }
