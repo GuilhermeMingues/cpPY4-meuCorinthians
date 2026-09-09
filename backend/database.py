@@ -25,7 +25,6 @@ def inserir_jogadores():
     cursor.execute("SELECT COUNT(*) FROM jogadores")
     quantidade = cursor.fetchone()[0]
 
-
     if quantidade == 0:
         cursor.executemany("INSERT INTO jogadores (nome, numero, posicao) VALUES (?, ?, ?)", [
             # Goleiros
@@ -77,13 +76,61 @@ def listar_jogadores():
     conexao.row_factory = sqlite3.Row
     cursor = conexao.cursor()
 
-    cursor.execute("SELECT nome, numero, posicao FROM jogadores")
+    cursor.execute("SELECT id, nome, numero, posicao FROM jogadores")
     linhas = cursor.fetchall()
     jogadores = [dict(linha) for linha in linhas]
 
     conexao.close()
 
     return jogadores
+
+def criar_tabela_favoritos():
+    conexao = sqlite3.connect("meu_corinthians.db")
+    cursor = conexao.cursor()
+
+    sql = """
+        CREATE TABLE IF NOT EXISTS favoritos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            jogador_id INTEGER
+        )
+    """
+
+    cursor.execute(sql)
+    conexao.commit()
+    conexao.close()
+
 if __name__ == "__main__":
     criar_conexao()
     inserir_jogadores()
+    criar_tabela_favoritos()
+
+def adicionar_favorito(jogador_id):
+    conexao = sqlite3.connect("meu_corinthians.db")
+    cursor = conexao.cursor()
+
+    cursor.execute("INSERT INTO favoritos (jogador_id) VALUES (?)", (jogador_id,))
+    conexao.commit()
+    conexao.close()
+
+def remover_favorito(jogador_id):
+    conexao = sqlite3.connect("meu_corinthians.db")
+    cursor = conexao.cursor()
+
+    cursor.execute("DELETE FROM favoritos WHERE jogador_id = ?", (jogador_id,))
+    conexao.commit()
+    conexao.close()
+
+def listar_favoritos():
+    conexao = sqlite3.connect("meu_corinthians.db")
+    conexao.row_factory = sqlite3.Row
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT jogador_id FROM favoritos
+    """)
+    linhas = cursor.fetchall()
+    favoritos = [linha[0] for linha in linhas]
+
+    conexao.close()
+
+    return favoritos
