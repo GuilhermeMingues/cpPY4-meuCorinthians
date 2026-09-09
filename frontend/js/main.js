@@ -59,19 +59,40 @@ const gruposElenco = [
   { chave: "Atacante", titulo: "ATACANTES" },
 ];
 
+// Gera um slug a partir do nome do jogador para usar como nome de arquivo
+// (ex: "André Carrillo" -> "andre-carrillo")
+function slugificarNome(nome) {
+  return nome
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // remove acentos
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 function criarCardHTML(jogador, idsFavoritos) {
   const favoritado = idsFavoritos.has(jogador.id);
+  const slug = slugificarNome(jogador.nome);
+
   return `
     <article class="card-elenco" data-jogador-id="${jogador.id}">
-      <div class="card-elenco__topo">
-        <span class="card-elenco__numero">${String(jogador.numero).padStart(2, "0")}</span>
-        <button class="favorito${favoritado ? " favorito--ativo" : ""}" type="button" aria-label="Favoritar jogador">
-          ${favoritado ? "★" : "☆"}
-        </button>
-      </div>
-      <div class="card-elenco__info">
-        <h3>${jogador.nome}</h3>
-        <span>${jogador.posicao}</span>
+      <img
+        class="card-elenco__foto"
+        src="img/elenco/${slug}.jpg"
+        alt="Foto de ${jogador.nome}"
+        onerror="this.onerror=null; this.src='img/elenco/placeholder.jpg';"
+      >
+      <div class="card-elenco__conteudo">
+        <div class="card-elenco__topo">
+          <span class="card-elenco__numero">${String(jogador.numero).padStart(2, "0")}</span>
+          <button class="favorito${favoritado ? " favorito--ativo" : ""}" type="button" aria-label="Favoritar jogador">
+            ${favoritado ? "★" : "☆"}
+          </button>
+        </div>
+        <div class="card-elenco__info">
+          <h3>${jogador.nome}</h3>
+          <span>${jogador.posicao}</span>
+        </div>
       </div>
     </article>
   `;
